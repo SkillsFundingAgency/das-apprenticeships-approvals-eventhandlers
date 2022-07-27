@@ -46,22 +46,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             builder.Services.AddOptions();
             builder.Services.Configure<ApprenticeshipsApiOptions>(config.GetSection(ApprenticeshipsApiOptions.ApprenticeshipsApi));
 
-            var logger = serviceProvider.GetService<ILoggerProvider>().CreateLogger(GetType().AssemblyQualifiedName);
-            if (config["NServiceBusConnectionString"] == "UseDevelopmentStorage=true")
-            {
-                builder.Services.AddNServiceBus(logger, (options) =>
-                {
-                    options.EndpointConfiguration = (endpoint) =>
-                    {
-                        endpoint.UseTransport<LearningTransport>().StorageDirectory(config.GetValue("UseLearningEndpointStorageDirectory", Path.Combine(Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().IndexOf("src")), @"src\SFA.DAS.EmployerIncentives.Functions.TestConsole\.learningtransport")));
-                        return endpoint;
-                    };
-                });
-            }
-            else
-            {
-                builder.Services.AddNServiceBus(logger);
-            }
+            builder.Services.AddOptions();
+            builder.Services.AddNServiceBus(config);
         }
     }
 }
