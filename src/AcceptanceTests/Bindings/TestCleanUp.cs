@@ -21,7 +21,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
                 await _context.TestMessageBus.Stop();
             }
             Directory.Delete(_context.TestDirectory.FullName, true);
-            _context.ApprovalsFunctions?.Dispose();
             _context.EarningsApi?.Dispose();
         }
     }
