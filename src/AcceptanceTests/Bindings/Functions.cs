@@ -17,8 +17,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
         [BeforeScenario()]
         public async Task InitialiseFunctions()
         {
-            _context.ApprovalsFunctions = new TestApprovalsFunctions(_context);
-            await _context.ApprovalsFunctions.Start();
-       }
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
         public DirectoryInfo TestDirectory { get; set; }
         public TestMessageBus? TestMessageBus { get; set; }
         public TestEarningsApi? EarningsApi { get; set; }
-        public TestApprovalsFunctions? ApprovalsFunctions { get; set; }
         public TestData TestData { get; set; }
         public List<IHook> Hooks { get; set; }
 
@@ -40,7 +39,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
             if (disposing)
             {
                 EarningsApi?.Dispose();
-                ApprovalsFunctions?.Dispose();
             }
 
             _isDisposed = true;

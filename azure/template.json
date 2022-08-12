@@ -70,7 +70,7 @@
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
         "functionAppName": "[concat(variables('resourceNamePrefix'), '-fa')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
-        "configNames": " SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions"
+        "configNames": "SFA.DAS.Apprenticeships.Approvals.EventHandlers"
     },
     "resources": [
         {
@@ -129,8 +129,7 @@
                     "appServicePlanName": {
                         "value": "[variables('appServicePlanName')]"
                     },
-                    "aspTier":
-                    {
+                    "nonASETier": {
                         "value": "[parameters('appServicePlanTier')]"
                     },
                     "aspSize": {
