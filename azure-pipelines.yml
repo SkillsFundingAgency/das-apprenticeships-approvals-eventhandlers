@@ -108,6 +108,7 @@ stages:
 #   - template: pipeline-templates/job/deploy.yml
 #     parameters:
 #       Environment: PROD
+#       SolutionBaseName: $(SolutionBaseName)
 #       ServiceConnection: SFA-DIG-Prod-ARM
 
 # - stage: Deploy_MO
@@ -120,6 +121,7 @@ stages:
 #   - template: pipeline-templates/job/deploy.yml
 #     parameters:
 #       Environment: MO
+#       SolutionBaseName: $(SolutionBaseName)
 #       ServiceConnection: SFA-ASM-ModelOffice-ARM
 
 - stage: Deploy_DEMO
