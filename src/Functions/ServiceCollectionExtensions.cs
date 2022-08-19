@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -15,6 +16,7 @@ using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
 {
+    [ExcludeFromCodeCoverage]
     public static class NServiceBusStartupExtensions
     {
         public static IServiceCollection AddNServiceBus(
