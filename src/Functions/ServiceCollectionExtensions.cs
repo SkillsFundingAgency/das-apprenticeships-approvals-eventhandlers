@@ -31,11 +31,11 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 .UseMessageConventions()
                 .UseNewtonsoftJsonSerializer();
 
-            if (configuration["NServiceBusConnectionString"].Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
+            if (configuration["ApplicationSettings:NServiceBusConnectionString"].Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
             {
                 endpointConfiguration
                     .UseTransport<LearningTransport>()
-                    .StorageDirectory(configuration.GetValue("LearningTransportStorageDirectory",
+                    .StorageDirectory(configuration.GetValue("ApplicationSettings:LearningTransportStorageDirectory",
                         Path.Combine(
                             Directory.GetCurrentDirectory()
                                 .Substring(0, Directory.GetCurrentDirectory().IndexOf("src")),
@@ -45,12 +45,12 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             else
             {
                 endpointConfiguration
-                    .UseAzureServiceBusTransport(configuration["NServiceBusConnectionString"], r => r.AddRouting());
+                    .UseAzureServiceBusTransport(configuration["ApplicationSettings:NServiceBusConnectionString"], r => r.AddRouting());
             }
 
-            if (!string.IsNullOrEmpty(configuration["NServiceBusLicense"]))
+            if (!string.IsNullOrEmpty(configuration["ApplicationSettings:NServiceBusLicense"]))
             {
-                endpointConfiguration.License(configuration["NServiceBusLicense"]);
+                endpointConfiguration.License(configuration["ApplicationSettings:NServiceBusLicense"]);
             }
 
             ExcludeTestAssemblies(endpointConfiguration.AssemblyScanner());
