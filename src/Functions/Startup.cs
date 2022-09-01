@@ -46,7 +46,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             builder.Services.Replace(ServiceDescriptor.Singleton(typeof(IConfiguration), config));
 
             builder.Services.AddOptions();
-            builder.Services.Configure<ApprenticeshipsApiOptions>(config.GetSection(ApprenticeshipsApiOptions.ApprenticeshipsApi));
+            builder.Services.Configure<ApplicationSettings>(config.GetSection("ApplicationSettings"));
 
             builder.Services.AddOptions();
             builder.Services.AddNServiceBus(config);
