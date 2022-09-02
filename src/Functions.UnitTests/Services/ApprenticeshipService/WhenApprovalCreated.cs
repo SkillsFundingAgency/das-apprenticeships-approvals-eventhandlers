@@ -39,9 +39,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = _fixture.Create<long>();
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
                 y => y.ActualStartDate == startDate && 
@@ -53,7 +53,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
                      y.PlannedEndDate == endDate &&
                      y.UKPRN == providerId &&
                      y.AgreedPrice == priceEpisodes.Single().Cost &&
-                     y.FundingBandMaximum == fundingBandMaximum
+                     y.TrainingCode == trainingCode
                 )));
         }
 
@@ -70,9 +70,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = _fixture.Create<long>();
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
                 y => y.FundingType == FundingType.Transfer
@@ -92,9 +92,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = (long?)null;
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
                 y => y.FundingType == FundingType.Levy
@@ -114,9 +114,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = (long?)null;
             var employerType = ApprenticeshipEmployerType.NonLevy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
                 y => y.FundingType == FundingType.NonLevy
@@ -136,9 +136,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = (long?)null;
             var employerType = (ApprenticeshipEmployerType?)null;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
         }
 
         [Test]
@@ -154,9 +154,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = (long?)null;
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>(), _fixture.Create<PriceEpisode>() };
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
         }
 
         [Test]
@@ -172,9 +172,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var transferSenderId = (long?)null;
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = Array.Empty<PriceEpisode>();
-            var fundingBandMaximum = _fixture.Create<decimal>();
+            var trainingCode = _fixture.Create<string>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, fundingBandMaximum));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
         }
     }
 }

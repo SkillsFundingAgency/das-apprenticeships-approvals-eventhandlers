@@ -16,7 +16,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
             _eventPublisher = eventPublisher;
         }
 
-        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, decimal fundingBandMaximum)
+        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode)
         {
             if (apprenticeshipEmployerType == null)
             {
@@ -48,10 +48,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 FundingEmployerAccountId = transferSenderId,
                 FundingType = fundingType,
                 PlannedEndDate = plannedEndDate,
-                TrainingCode = "", //TODO
+                TrainingCode = trainingCode,
                 UKPRN = ukprn,
-                Uln = uln,
-                FundingBandMaximum = fundingBandMaximum
+                Uln = uln
             };
 
             await _eventPublisher.Publish(approvalCreatedCommand);

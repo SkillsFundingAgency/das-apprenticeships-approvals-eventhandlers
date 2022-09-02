@@ -29,7 +29,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 command.TransferSenderId,
                 command.ApprenticeshipEmployerTypeOnApproval,
                 command.PriceEpisodes,
-                command.FundingBandMaximum);
+                command.TrainingCode);
         }
     }
 }

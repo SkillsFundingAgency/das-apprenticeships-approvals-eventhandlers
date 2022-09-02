@@ -29,7 +29,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
 
             await _handler.HandleCommand(command);
 
-            _apprenticeshipService.Verify(x => x.CreateApproval(command.Uln, command.ApprenticeshipId, command.ProviderId, command.AccountId, command.LegalEntityName, command.StartDate, command.EndDate, command.TransferSenderId, command.ApprenticeshipEmployerTypeOnApproval, command.PriceEpisodes, command.FundingBandMaximum));
+            _apprenticeshipService.Verify(x => x.CreateApproval(command.Uln, command.ApprenticeshipId, command.ProviderId, command.AccountId, command.LegalEntityName, command.StartDate, command.EndDate, command.TransferSenderId, command.ApprenticeshipEmployerTypeOnApproval, command.PriceEpisodes, command.TrainingCode));
         }
     }
 }
