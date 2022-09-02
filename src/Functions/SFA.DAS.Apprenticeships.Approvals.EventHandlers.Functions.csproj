@@ -7,7 +7,7 @@
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
     <PackageReference Include="NServiceBus" Version="7.7.3" />
-    <PackageReference Include="SFA.DAS.CommitmentsV2.Messages" Version="8.22.7" />
+    <PackageReference Include="SFA.DAS.CommitmentsV2.Messages" Version="8.22.5" />
     <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="3.0.84" />
     <PackageReference Include="SFA.DAS.Http" Version="3.2.69" />
     <PackageReference Include="SFA.DAS.NServiceBus.AzureFunction" Version="17.0.13" />
