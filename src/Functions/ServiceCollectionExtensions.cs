@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
-using NServiceBus.ObjectBuilder.MSDependencyInjection;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
 using SFA.DAS.NServiceBus.AzureFunction.Hosting;
 using SFA.DAS.NServiceBus.Configuration;
 using SFA.DAS.NServiceBus.Configuration.AzureServiceBus;
 using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
 {
+    [ExcludeFromCodeCoverage]
     public static class NServiceBusStartupExtensions
     {
         public static IServiceCollection AddNServiceBus(
             this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            ApplicationSettings applicationSettings)
         {
             var webBuilder = serviceCollection.AddWebJobs(x => { });
             webBuilder.AddExecutionContextBinding();
@@ -29,33 +30,35 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 .UseMessageConventions()
                 .UseNewtonsoftJsonSerializer();
 
-            if (configuration["NServiceBusConnectionString"].Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
+            endpointConfiguration.SendOnly();
+
+            if (applicationSettings.NServiceBusConnectionString.Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
             {
+                var learningTransportFolder = string.IsNullOrEmpty(applicationSettings.LearningTransportStorageDirectory) ?
+                    Path.Combine(
+                        Directory.GetCurrentDirectory()[..Directory.GetCurrentDirectory().IndexOf("src", StringComparison.Ordinal)],
+                        @"src\.learningtransport")
+                    : applicationSettings.LearningTransportStorageDirectory;
                 endpointConfiguration
                     .UseTransport<LearningTransport>()
-                    .StorageDirectory(configuration.GetValue("LearningTransportStorageDirectory",
-                        Path.Combine(
-                            Directory.GetCurrentDirectory()
-                                .Substring(0, Directory.GetCurrentDirectory().IndexOf("src")),
-                            @"src\SFA.DAS.Apprenticeships.Functions.TestConsole\.learningtransport")));
+                    .StorageDirectory(learningTransportFolder);
                 endpointConfiguration.UseLearningTransport(s => s.AddRouting());
+                Environment.SetEnvironmentVariable("LearningTransportStorageDirectory", learningTransportFolder, EnvironmentVariableTarget.Process);
             }
             else
             {
                 endpointConfiguration
-                    .UseAzureServiceBusTransport(configuration["NServiceBusConnectionString"], r => r.AddRouting());
+                    .UseAzureServiceBusTransport(applicationSettings.NServiceBusConnectionString, r => r.AddRouting());
             }
 
-            if (!string.IsNullOrEmpty(configuration["NServiceBusLicense"]))
+            if (!string.IsNullOrEmpty(applicationSettings.NServiceBusLicense))
             {
-                endpointConfiguration.License(configuration["NServiceBusLicense"]);
+                endpointConfiguration.License(applicationSettings.NServiceBusLicense);
             }
 
             ExcludeTestAssemblies(endpointConfiguration.AssemblyScanner());
-            
-            var endpointWithExternallyManagedServiceProvider = EndpointWithExternallyManagedServiceProvider.Create(endpointConfiguration, serviceCollection);
-            endpointWithExternallyManagedServiceProvider.Start(new UpdateableServiceProvider(serviceCollection));
-            serviceCollection.AddSingleton(p => endpointWithExternallyManagedServiceProvider.MessageSession.Value);
+
+            endpointConfiguration.UseEndpointWithExternallyManagedService(serviceCollection);
 
             return serviceCollection;
         }
