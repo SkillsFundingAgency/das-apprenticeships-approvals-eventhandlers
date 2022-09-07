@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.Configuration.AzureTableStorage;
 using System;
 using System.IO;
@@ -51,6 +52,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             Environment.SetEnvironmentVariable("NServiceBusConnectionString", applicationSettings.NServiceBusConnectionString);
 
             builder.Services.AddNServiceBus(applicationSettings);
+
+            builder.Services.AddScoped<IApprenticeshipService, ApprenticeshipService>();
         }
     }
 }
