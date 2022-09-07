@@ -41,6 +41,9 @@
         "subnetServiceEndpointList": {
             "type": "array"
         },
+        "sharedServiceBusName": {
+            "type": "string"
+        },
         "subnetDelegations": {
             "type": "array"
         },
@@ -266,8 +269,8 @@
             ]
         },
         {
-            "apiVersion": "2020-10-01",
-            "name": "[concat('role-assignments-', parameters('utcValue'), '-', copyIndex())]",
+            "apiVersion": "2021-04-01",
+            "name": "[concat('role-assignment-', variables('functionAppName'), '-', parameters('utcValue')]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "properties": {
@@ -278,7 +281,7 @@
                 },
                 "parameters": {
                     "principalId": {
-                        "value": "[createArray(reference(concat('app-service-', parameters('utcValue'))).outputs.managedServiceIdentityId.value, reference(concat('app-service-', parameters('utcValue'))).outputs.stagingManagedServiceIdentityId.value)[copyIndex()]]"
+                        "value": "[reference(concat(variables('functionAppName'), '-', parameters('utcValue'))).outputs.managedServiceIdentityId.value]"
                     },
                     "assignmentType": {
                         "value": "ServiceBusOwner"
@@ -287,10 +290,6 @@
                         "value": "[parameters('sharedServiceBusName')]"
                     }
                 }
-            },
-            "copy": {
-                "name": "role-assignments",
-                "count": 2
             }
         }
     ],
