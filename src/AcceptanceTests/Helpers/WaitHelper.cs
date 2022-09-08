@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Helpers;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Helpers;
 
 public static class WaitHelper
 {

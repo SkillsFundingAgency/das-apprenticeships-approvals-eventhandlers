@@ -7,9 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests;
 
 public class TestFunction : IDisposable
 {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Hosting;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests;
 
 public class PurgeBackgroundJob : BackgroundService
 {

@@ -13,7 +13,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests;
 
 public static class WebJobsBuilderExtensions
 {

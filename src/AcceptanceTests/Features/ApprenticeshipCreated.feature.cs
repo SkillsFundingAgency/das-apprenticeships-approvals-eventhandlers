@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Features
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Features
 {
     using TechTalk.SpecFlow;
     using System;

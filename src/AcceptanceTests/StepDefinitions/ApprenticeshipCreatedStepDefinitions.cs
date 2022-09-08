@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using NServiceBus;
-using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Handlers;
-using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Helpers;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Handlers;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Helpers;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions;
 using SFA.DAS.Approvals.EventHandlers.Messages;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.StepDefinitions
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.StepDefinitions
 {
     [Binding]
     public class ApprenticeshipCreatedStepDefinitions111

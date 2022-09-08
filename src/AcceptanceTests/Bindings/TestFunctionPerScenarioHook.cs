@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Bindings;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Bindings;
 
 [Binding]
 public class TestFunctionPerScenarioHook

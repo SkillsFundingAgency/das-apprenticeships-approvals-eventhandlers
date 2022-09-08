@@ -71,8 +71,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             };
 
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            foreach (var fileName in Directory.EnumerateFiles(baseDirectory, "*.dll")
-                         .Select(Path.GetFileName))
+            foreach (var fileName in Directory.EnumerateFiles(baseDirectory, "*.dll").Select(Path.GetFileName))
             {
                 if (excludeRegexs.Any(pattern => Regex.IsMatch(fileName, pattern, RegexOptions.IgnoreCase)))
                 {

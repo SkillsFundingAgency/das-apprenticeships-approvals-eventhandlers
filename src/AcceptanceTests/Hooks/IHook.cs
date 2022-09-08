@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Hooks
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Hooks
 {
     public interface IHook
     {

@@ -3,7 +3,7 @@ using SFA.DAS.Approvals.EventHandlers.Messages;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Handlers;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Handlers;
 
 public class ApprovalCreatedEventHandler : IHandleMessages<ApprovalCreatedEvent>
 {

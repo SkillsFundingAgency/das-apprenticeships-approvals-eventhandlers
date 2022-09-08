@@ -1,8 +1,8 @@
-﻿using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services;
+﻿using SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Services;
 using System;
 using System.IO;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests
 {
     public class TestContext : IDisposable
     {

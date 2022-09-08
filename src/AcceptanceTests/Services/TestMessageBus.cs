@@ -4,7 +4,7 @@ using NServiceBus;
 using SFA.DAS.NServiceBus.Configuration;
 using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Services
 {
     public class TestMessageBus
     {

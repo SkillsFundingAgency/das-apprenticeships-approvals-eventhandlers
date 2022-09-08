@@ -4,8 +4,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Helpers;
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Helpers;
 
 public static class EndpointHelper  
 {

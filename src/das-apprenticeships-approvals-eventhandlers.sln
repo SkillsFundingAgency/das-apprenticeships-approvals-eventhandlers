@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C8DBC88
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests", "Functions.UnitTests\SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.csproj", "{59F90F37-3B9A-47BD-9049-6E7229989534}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests", "AcceptanceTests\SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.csproj", "{01D806D7-B641-4B85-BC45-C9DB6B7CBBC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests", "AcceptanceTests\SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.csproj", "{01D806D7-B641-4B85-BC45-C9DB6B7CBBC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Approvals.EventHandlers.Messages", "SFA.DAS.Approvals.EventHandlers.Messages\SFA.DAS.Approvals.EventHandlers.Messages.csproj", "{8CEEE96E-956D-4E11-BD25-97DCCC1D03ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Approvals.EventHandlers.Messages", "SFA.DAS.Approvals.EventHandlers.Messages\SFA.DAS.Approvals.EventHandlers.Messages.csproj", "{8CEEE96E-956D-4E11-BD25-97DCCC1D03ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
