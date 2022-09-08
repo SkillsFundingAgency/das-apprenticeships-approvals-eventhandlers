@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services;
+using System;
 using System.IO;
-using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Hooks;
-using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests
 {
@@ -12,7 +10,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
         public TestMessageBus? TestMessageBus { get; set; }
         public TestEarningsApi? EarningsApi { get; set; }
         public TestData TestData { get; set; }
-        public List<IHook> Hooks { get; set; }
+        public TestFunction? TestFunction { get; set; }
 
         public TestContext()
         {
@@ -22,7 +20,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
                 Directory.CreateDirectory(TestDirectory.FullName);
             }
             TestData = new TestData();
-            Hooks = new List<IHook>();
         }
         private bool _isDisposed;
 

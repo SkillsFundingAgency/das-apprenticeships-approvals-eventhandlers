@@ -1,19 +1,19 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoFixture;
 using Moq;
+using NServiceBus;
 using NUnit.Framework;
 using SFA.DAS.Approvals.EventHandlers.Messages;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.CommitmentsV2.Types;
-using SFA.DAS.NServiceBus.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Services.ApprenticeshipService
 {
     public class WhenApprovalCreated
     {
-        private Mock<IEventPublisher> _eventPublisher;
+        private Mock<IMessageSession> _eventPublisher;
         private Functions.Services.ApprenticeshipService _apprenticeshipService;
         private Fixture _fixture;
 
@@ -22,7 +22,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
         {
             _fixture = new Fixture();
 
-            _eventPublisher = new Mock<IEventPublisher>();
+            _eventPublisher = new Mock<IMessageSession>();
             _apprenticeshipService = new Functions.Services.ApprenticeshipService(_eventPublisher.Object);
         }
 

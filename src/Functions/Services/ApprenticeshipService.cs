@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using NServiceBus;
 using SFA.DAS.Approvals.EventHandlers.Messages;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.CommitmentsV2.Types;
@@ -9,9 +10,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
 {
     public class ApprenticeshipService : IApprenticeshipService
     {
-        private readonly IEventPublisher _eventPublisher;
+        private readonly IMessageSession _eventPublisher;
 
-        public ApprenticeshipService(IEventPublisher eventPublisher)
+        public ApprenticeshipService(IMessageSession eventPublisher)
         {
             _eventPublisher = eventPublisher;
         }
@@ -53,7 +54,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 Uln = uln
             };
 
-            await _eventPublisher.Publish(approvalCreatedCommand);
+            await _eventPublisher.Send(approvalCreatedCommand);
         }
     }
 }
