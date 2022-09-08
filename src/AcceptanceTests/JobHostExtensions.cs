@@ -15,7 +15,7 @@ public static class JobHostExtensions
     {
         await jobs.CallAsync(nameof(WaitForFunction), new Dictionary<string, object>
         {
-            ["timeout"] = timeout,
+            ["timeout"] = timeout!,
             ["name"] = orchestration,
             ["expectedCustomStatus"] = expectedCustomStatus
         });
@@ -101,7 +101,7 @@ public class OrchestrationStarterInfo
         string orchestrationName,
         Dictionary<string, object> args = null,
         TimeSpan? timeout = null,
-        string expectedCustomStatus = null)
+        string? expectedCustomStatus = null)
     {
         if (string.IsNullOrEmpty(starterName)) throw new ArgumentException("Missing starter name");
         if (string.IsNullOrEmpty(orchestrationName)) throw new ArgumentException("Missing starter name");

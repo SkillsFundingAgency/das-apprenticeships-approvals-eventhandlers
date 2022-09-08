@@ -9,9 +9,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
 {
     public class WhenApprenticeshipCreated
     {
-        private Mock<IApprenticeshipService> _apprenticeshipService;
-        private HandleApprenticeshipCreated _handler;
-        private Fixture _fixture;
+        private Mock<IApprenticeshipService> _apprenticeshipService = null!;
+        private HandleApprenticeshipCreated _handler = null!;
+        private Fixture _fixture = null!;
 
         [SetUp]
         public void Setup()

@@ -12,14 +12,14 @@ using TechTalk.SpecFlow;
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.StepDefinitions
 {
     [Binding]
-    public class ApprenticeshipCreatedStepDefinitions
+    public class ApprenticeshipCreatedStepDefinitions111
     {
         private static IEndpointInstance? _endpointInstance;
         private readonly ScenarioContext _scenarioContext;
         private readonly TestContext _testContext;
         private readonly Fixture _fixture;
 
-        public ApprenticeshipCreatedStepDefinitions(ScenarioContext scenarioContext, TestContext testContext)
+        public ApprenticeshipCreatedStepDefinitions111(ScenarioContext scenarioContext, TestContext testContext)
         {
             _scenarioContext = scenarioContext;
             _testContext = testContext;
