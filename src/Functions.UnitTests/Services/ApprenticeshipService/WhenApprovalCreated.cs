@@ -13,9 +13,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
 {
     public class WhenApprovalCreated
     {
-        private Mock<IMessageSession> _eventPublisher;
-        private Functions.Services.ApprenticeshipService _apprenticeshipService;
-        private Fixture _fixture;
+        private Mock<IMessageSession> _eventPublisher = null!;
+        private Functions.Services.ApprenticeshipService _apprenticeshipService = null!;
+        private Fixture _fixture = null!;
 
         [SetUp]
         public void Setup()
@@ -43,7 +43,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
 
             await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
-            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
+            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.ActualStartDate == startDate && 
                      y.ApprovalsApprenticeshipId == apprenticeshipId && 
                      y.EmployerAccountId == accountId && 
@@ -54,7 +54,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
                      y.UKPRN == providerId &&
                      y.AgreedPrice == priceEpisodes.Single().Cost &&
                      y.TrainingCode == trainingCode
-                )));
+                ), It.IsAny<PublishOptions>()));
         }
 
         [Test]
@@ -74,9 +74,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
 
             await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
-            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
+            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.Transfer
-            )));
+            ), It.IsAny<PublishOptions>()));
         }
 
         [Test]
@@ -94,11 +94,11 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName,
+                startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
-            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
-                y => y.FundingType == FundingType.Levy
-            )));
+            _eventPublisher.Verify(x => x.Publish(
+                It.Is<ApprovalCreatedEvent>(y => y.FundingType == FundingType.Levy), It.IsAny<PublishOptions>()));
         }
 
         [Test]
@@ -118,13 +118,13 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
 
             await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
 
-            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedCommand>(
+            _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.NonLevy
-            )));
+            ), It.IsAny<PublishOptions>()));
         }
 
         [Test]
-        public async Task AndTheEmployerTypeIsNullThenAnExceptionIsThrown()
+        public void AndTheEmployerTypeIsNullThenAnExceptionIsThrown()
         {
             var uln = _fixture.Create<string>();
             var apprenticeshipId = _fixture.Create<long>();
@@ -142,7 +142,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
         }
 
         [Test]
-        public async Task AndThereAreMultiplePriceEpisodesThenAnExceptionIsThrown()
+        public void AndThereAreMultiplePriceEpisodesThenAnExceptionIsThrown()
         {
             var uln = _fixture.Create<string>();
             var apprenticeshipId = _fixture.Create<long>();
@@ -160,7 +160,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
         }
 
         [Test]
-        public async Task AndThereAreNoPriceEpisodesThenAnExceptionIsThrown()
+        public void AndThereAreNoPriceEpisodesThenAnExceptionIsThrown()
         {
             var uln = _fixture.Create<string>();
             var apprenticeshipId = _fixture.Create<long>();

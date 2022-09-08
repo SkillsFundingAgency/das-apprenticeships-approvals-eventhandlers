@@ -30,7 +30,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
         public static async Task StartEndpoint()
         {
             _endpointInstance = await EndpointHelper
-                .StartEndpoint(QueueNames.ApprenticeshipCreated + "TEST", false, new[] { typeof(ApprenticeshipCreatedEvent), typeof(ApprovalCreatedCommand) });
+                .StartEndpoint(QueueNames.ApprenticeshipCreated + "test", false, new[] { typeof(ApprenticeshipCreatedEvent), typeof(ApprovalCreatedEvent) });
         }
 
         [AfterTestRun]
@@ -54,19 +54,29 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTe
             _scenarioContext["ApprenticeshipCreatedEvent"] = apprenticeshipCreatedEvent;
         }
 
-        [Then(@"an ApprovalCreatedCommand is published")]
-        public async Task ThenAnApprovalCreatedCommandIsPublished()
+        [Then(@"an ApprovalCreatedEvent is published")]
+        public async Task ThenAnApprovalCreatedEventIsPublished()
         {
-            await WaitHelper.WaitForIt(() => ApprovalCreatedCommandHandler.ReceivedCommands.Any(EventMatchesExpectation), $"Failed to find published {nameof(ApprovalCreatedCommand)}");
+            await WaitHelper.WaitForIt(() => ApprovalCreatedEventHandler.ReceivedEvents.Any(EventMatchesExpectation), $"Failed to find published {nameof(ApprovalCreatedEvent)}");
 
-            var publishedEvent = ApprovalCreatedCommandHandler.ReceivedCommands.Single();
+            var publishedEvent = ApprovalCreatedEventHandler.ReceivedEvents.Single();
 
-            publishedEvent.Should().BeEquivalentTo(ApprenticeshipCreatedEvent);
+            publishedEvent.ActualStartDate.Should().Be(ApprenticeshipCreatedEvent.StartDate);
+            publishedEvent.AgreedPrice.Should().Be(ApprenticeshipCreatedEvent.PriceEpisodes.First().Cost);
+            publishedEvent.ApprovalsApprenticeshipId.Should().Be(ApprenticeshipCreatedEvent.ApprenticeshipId);
+            publishedEvent.EmployerAccountId.Should().Be(ApprenticeshipCreatedEvent.AccountId);
+            publishedEvent.FundingEmployerAccountId.Should().Be(ApprenticeshipCreatedEvent.TransferSenderId);
+            publishedEvent.FundingType.Should().Be(FundingType.Transfer);
+            publishedEvent.LegalEntityName.Should().Be(ApprenticeshipCreatedEvent.LegalEntityName);
+            publishedEvent.PlannedEndDate.Should().Be(ApprenticeshipCreatedEvent.EndDate);
+            publishedEvent.TrainingCode.Should().Be(ApprenticeshipCreatedEvent.TrainingCode);
+            publishedEvent.UKPRN.Should().Be(ApprenticeshipCreatedEvent.ProviderId);
+            publishedEvent.Uln.Should().Be(ApprenticeshipCreatedEvent.Uln);
         }
 
-        private bool EventMatchesExpectation(ApprovalCreatedCommand command)
+        private bool EventMatchesExpectation(ApprovalCreatedEvent @event)
         {
-            return command.Uln == ApprenticeshipCreatedEvent.Uln;
+            return @event.Uln == ApprenticeshipCreatedEvent.Uln;
         }
 
         public ApprenticeshipCreatedEvent ApprenticeshipCreatedEvent => (ApprenticeshipCreatedEvent)_scenarioContext["ApprenticeshipCreatedEvent"];

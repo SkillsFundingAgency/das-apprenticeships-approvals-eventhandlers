@@ -1,6 +1,6 @@
 ﻿namespace SFA.DAS.Approvals.EventHandlers.Messages
 {
-    public class ApprovalCreatedCommand
+    public class ApprovalCreatedEvent
     {
         public string Uln { get; set; }
         public string TrainingCode { get; set; }

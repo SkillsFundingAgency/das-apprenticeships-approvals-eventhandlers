@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using NServiceBus;
+﻿using NServiceBus;
 using SFA.DAS.Approvals.EventHandlers.Messages;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.CommitmentsV2.Types;
-using SFA.DAS.NServiceBus.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
 {
@@ -39,7 +38,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 fundingType = FundingType.NonLevy;
             }
 
-            var approvalCreatedCommand = new ApprovalCreatedCommand
+            var approvalCreatedEvent = new ApprovalCreatedEvent
             {
                 ActualStartDate = actualStartDate,
                 LegalEntityName = legalEntityName,
@@ -54,7 +53,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 Uln = uln
             };
 
-            await _eventPublisher.Send(approvalCreatedCommand);
+            await _eventPublisher.Publish(approvalCreatedEvent);
         }
     }
 }
