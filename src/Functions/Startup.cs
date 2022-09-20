@@ -8,11 +8,13 @@ using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.Configuration.AzureTableStorage;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
 {
+    [ExcludeFromCodeCoverage]
     public class Startup : FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
