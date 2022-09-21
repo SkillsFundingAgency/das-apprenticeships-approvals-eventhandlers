@@ -40,8 +40,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.ActualStartDate == startDate && 
@@ -53,7 +54,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
                      y.PlannedEndDate == endDate &&
                      y.UKPRN == providerId &&
                      y.AgreedPrice == priceEpisodes.Single().Cost &&
-                     y.TrainingCode == trainingCode
+                     y.TrainingCode == trainingCode &&
+                     y.DateOfBirth == dateOfBirth
                 ), It.IsAny<PublishOptions>()));
         }
 
@@ -71,8 +73,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.Transfer
@@ -93,9 +96,10 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
             await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName,
-                startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
+                startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth);
 
             _eventPublisher.Verify(x => x.Publish(
                 It.Is<ApprovalCreatedEvent>(y => y.FundingType == FundingType.Levy), It.IsAny<PublishOptions>()));
@@ -115,8 +119,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.NonLevy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode);
+            await _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.NonLevy
@@ -137,8 +142,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = (ApprenticeshipEmployerType?)null;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth));
         }
 
         [Test]
@@ -155,8 +161,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = new[] { _fixture.Create<PriceEpisode>(), _fixture.Create<PriceEpisode>() };
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth));
         }
 
         [Test]
@@ -173,8 +180,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var employerType = ApprenticeshipEmployerType.Levy;
             var priceEpisodes = Array.Empty<PriceEpisode>();
             var trainingCode = _fixture.Create<string>();
+            var dateOfBirth = _fixture.Create<DateTime>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, apprenticeshipId, providerId, accountId, legalEntityName, startDate, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth));
         }
     }
 }

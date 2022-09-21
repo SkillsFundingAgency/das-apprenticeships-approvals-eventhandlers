@@ -29,7 +29,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 @event.TransferSenderId,
                 @event.ApprenticeshipEmployerTypeOnApproval,
                 @event.PriceEpisodes,
-                @event.TrainingCode);
+                @event.TrainingCode,
+                @event.DateOfBirth);
         }
     }
 }
