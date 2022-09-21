@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Functions\SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Approvals.EventHandlers.Messages\SFA.DAS.Approvals.EventHandlers.Messages.csproj" />
   </ItemGroup>
 
   <ItemGroup>

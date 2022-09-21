@@ -16,7 +16,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
             _eventPublisher = eventPublisher;
         }
 
-        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode, DateTime? dateOfBirth)
+        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode, DateTime dateOfBirth)
         {
             if (apprenticeshipEmployerType == null)
             {

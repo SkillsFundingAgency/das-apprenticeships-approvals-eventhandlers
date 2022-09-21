@@ -13,6 +13,6 @@
         public decimal AgreedPrice { get; set; }
         public long? FundingEmployerAccountId { get; set; }
         public FundingType FundingType { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
