@@ -73,6 +73,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.StepDe
             publishedEvent.TrainingCode.Should().Be(ApprenticeshipCreatedEvent.TrainingCode);
             publishedEvent.UKPRN.Should().Be(ApprenticeshipCreatedEvent.ProviderId);
             publishedEvent.Uln.Should().Be(ApprenticeshipCreatedEvent.Uln);
+            publishedEvent.DateOfBirth.Should().Be(ApprenticeshipCreatedEvent.DateOfBirth);
         }
 
         private bool EventMatchesExpectation(ApprovalCreatedEvent @event)
