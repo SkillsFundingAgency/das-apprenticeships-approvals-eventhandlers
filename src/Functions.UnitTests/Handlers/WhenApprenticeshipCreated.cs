@@ -9,9 +9,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
 {
     public class WhenApprenticeshipCreated
     {
-        private Mock<IApprenticeshipService> _apprenticeshipService;
-        private HandleApprenticeshipCreated _handler;
-        private Fixture _fixture;
+        private Mock<IApprenticeshipService> _apprenticeshipService = null!;
+        private HandleApprenticeshipCreated _handler = null!;
+        private Fixture _fixture = null!;
 
         [SetUp]
         public void Setup()
@@ -25,11 +25,11 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
         [Test]
         public async Task ThenApprovalIsCreated()
         {
-            var command = _fixture.Create<ApprenticeshipCreatedEvent>();
+            var @event = _fixture.Create<ApprenticeshipCreatedEvent>();
 
-            await _handler.HandleCommand(command);
+            await _handler.Handle(@event);
 
-            _apprenticeshipService.Verify(x => x.CreateApproval(command.Uln, command.ApprenticeshipId, command.ProviderId, command.AccountId, command.LegalEntityName, command.StartDate, command.EndDate, command.TransferSenderId, command.ApprenticeshipEmployerTypeOnApproval, command.PriceEpisodes));
+            _apprenticeshipService.Verify(x => x.CreateApproval(@event.Uln, @event.ApprenticeshipId, @event.ProviderId, @event.AccountId, @event.LegalEntityName, @event.StartDate, @event.EndDate, @event.TransferSenderId, @event.ApprenticeshipEmployerTypeOnApproval, @event.PriceEpisodes, @event.TrainingCode, @event.DateOfBirth));
         }
     }
 }

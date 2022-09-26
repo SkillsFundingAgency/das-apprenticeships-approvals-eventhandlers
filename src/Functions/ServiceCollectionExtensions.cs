@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
+using SFA.DAS.NServiceBus.AzureFunction.Hosting;
+using SFA.DAS.NServiceBus.Configuration;
+using SFA.DAS.NServiceBus.Configuration.AzureServiceBus;
+using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
-using NServiceBus.ObjectBuilder.MSDependencyInjection;
-using SFA.DAS.NServiceBus.AzureFunction.Hosting;
-using SFA.DAS.NServiceBus.Configuration;
-using SFA.DAS.NServiceBus.Configuration.AzureServiceBus;
-using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
 {
@@ -21,7 +20,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
     {
         public static IServiceCollection AddNServiceBus(
             this IServiceCollection serviceCollection,
-            IConfiguration configuration)
+            ApplicationSettings applicationSettings)
         {
             var webBuilder = serviceCollection.AddWebJobs(x => { });
             webBuilder.AddExecutionContextBinding();
@@ -31,33 +30,35 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 .UseMessageConventions()
                 .UseNewtonsoftJsonSerializer();
 
-            if (configuration["ApplicationSettings:NServiceBusConnectionString"].Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
+            endpointConfiguration.SendOnly();
+
+            if (applicationSettings.NServiceBusConnectionString.Equals("UseLearningEndpoint=true", StringComparison.CurrentCultureIgnoreCase))
             {
+                var learningTransportFolder = string.IsNullOrEmpty(applicationSettings.LearningTransportStorageDirectory) ?
+                    Path.Combine(
+                        Directory.GetCurrentDirectory()[..Directory.GetCurrentDirectory().IndexOf("src", StringComparison.Ordinal)],
+                        @"src\.learningtransport")
+                    : applicationSettings.LearningTransportStorageDirectory;
                 endpointConfiguration
                     .UseTransport<LearningTransport>()
-                    .StorageDirectory(configuration.GetValue("ApplicationSettings:LearningTransportStorageDirectory",
-                        Path.Combine(
-                            Directory.GetCurrentDirectory()
-                                .Substring(0, Directory.GetCurrentDirectory().IndexOf("src")),
-                            @"src\SFA.DAS.Apprenticeships.Functions.TestConsole\.learningtransport")));
+                    .StorageDirectory(learningTransportFolder);
                 endpointConfiguration.UseLearningTransport(s => s.AddRouting());
+                Environment.SetEnvironmentVariable("LearningTransportStorageDirectory", learningTransportFolder, EnvironmentVariableTarget.Process);
             }
             else
             {
                 endpointConfiguration
-                    .UseAzureServiceBusTransport(configuration["ApplicationSettings:NServiceBusConnectionString"], r => r.AddRouting());
+                    .UseAzureServiceBusTransport(applicationSettings.NServiceBusConnectionString, r => r.AddRouting());
             }
 
-            if (!string.IsNullOrEmpty(configuration["ApplicationSettings:NServiceBusLicense"]))
+            if (!string.IsNullOrEmpty(applicationSettings.NServiceBusLicense))
             {
-                endpointConfiguration.License(configuration["ApplicationSettings:NServiceBusLicense"]);
+                endpointConfiguration.License(applicationSettings.NServiceBusLicense);
             }
 
             ExcludeTestAssemblies(endpointConfiguration.AssemblyScanner());
-            
-            var endpointWithExternallyManagedServiceProvider = EndpointWithExternallyManagedServiceProvider.Create(endpointConfiguration, serviceCollection);
-            endpointWithExternallyManagedServiceProvider.Start(new UpdateableServiceProvider(serviceCollection));
-            serviceCollection.AddSingleton(p => endpointWithExternallyManagedServiceProvider.MessageSession.Value);
+
+            endpointConfiguration.UseEndpointWithExternallyManagedService(serviceCollection);
 
             return serviceCollection;
         }
@@ -70,16 +71,11 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             };
 
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            foreach (var fileName in Directory.EnumerateFiles(baseDirectory, "*.dll")
-                         .Select(Path.GetFileName))
+            foreach (var fileName in Directory.EnumerateFiles(baseDirectory, "*.dll").Select(Path.GetFileName))
             {
-                foreach (var pattern in excludeRegexs)
+                if (excludeRegexs.Any(pattern => Regex.IsMatch(fileName, pattern, RegexOptions.IgnoreCase)))
                 {
-                    if (Regex.IsMatch(fileName, pattern, RegexOptions.IgnoreCase))
-                    {
-                        scanner.ExcludeAssemblies(fileName);
-                        break;
-                    }
+                    scanner.ExcludeAssemblies(fileName);
                 }
             }
         }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using NServiceBus;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Configuration;
+using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.Configuration.AzureTableStorage;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
@@ -46,10 +46,16 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
             builder.Services.Replace(ServiceDescriptor.Singleton(typeof(IConfiguration), config));
 
             builder.Services.AddOptions();
-            builder.Services.Configure<ApplicationSettings>(config.GetSection("ApplicationSettings"));
+            builder.Services.Configure<ApprenticeshipsApiOptions>(config.GetSection(ApprenticeshipsApiOptions.ApprenticeshipsApi));
 
-            builder.Services.AddOptions();
-            builder.Services.AddNServiceBus(config);
+            builder.Services.Configure<ApplicationSettings>(config.GetSection("ApplicationSettings"));
+            var applicationSettings = config.GetSection("ApplicationSettings").Get<ApplicationSettings>();
+
+            Environment.SetEnvironmentVariable("NServiceBusConnectionString", applicationSettings.NServiceBusConnectionString);
+
+            builder.Services.AddNServiceBus(applicationSettings);
+
+            builder.Services.AddScoped<IApprenticeshipService, ApprenticeshipService>();
         }
     }
 }

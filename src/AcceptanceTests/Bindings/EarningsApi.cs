@@ -1,7 +1,7 @@
-﻿using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services;
+﻿using SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Services;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Bindings
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Bindings
 {
     [Binding]
     [Scope(Tag = "earningsApi")]

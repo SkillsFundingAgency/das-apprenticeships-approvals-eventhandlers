@@ -1,22 +1,22 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using NServiceBus;
 using SFA.DAS.Approvals.EventHandlers.Messages;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.CommitmentsV2.Types;
-using SFA.DAS.NServiceBus.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
 {
     public class ApprenticeshipService : IApprenticeshipService
     {
-        private readonly IEventPublisher _eventPublisher;
+        private readonly IMessageSession _eventPublisher;
 
-        public ApprenticeshipService(IEventPublisher eventPublisher)
+        public ApprenticeshipService(IMessageSession eventPublisher)
         {
             _eventPublisher = eventPublisher;
         }
 
-        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes)
+        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode, DateTime dateOfBirth)
         {
             if (apprenticeshipEmployerType == null)
             {
@@ -38,7 +38,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 fundingType = FundingType.NonLevy;
             }
 
-            var approvalCreatedCommand = new ApprovalCreatedCommand
+            var approvalCreatedEvent = new ApprovalCreatedEvent
             {
                 ActualStartDate = actualStartDate,
                 LegalEntityName = legalEntityName,
@@ -48,12 +48,13 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 FundingEmployerAccountId = transferSenderId,
                 FundingType = fundingType,
                 PlannedEndDate = plannedEndDate,
-                TrainingCode = "", //TODO
+                TrainingCode = trainingCode,
                 UKPRN = ukprn,
-                Uln = uln
+                Uln = uln,
+                DateOfBirth = dateOfBirth
             };
 
-            await _eventPublisher.Publish(approvalCreatedCommand);
+            await _eventPublisher.Publish(approvalCreatedEvent);
         }
     }
 }

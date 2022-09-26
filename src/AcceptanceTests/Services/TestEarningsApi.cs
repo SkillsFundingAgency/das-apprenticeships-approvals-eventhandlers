@@ -1,7 +1,7 @@
 ﻿using System;
 using WireMock.Server;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests.Services
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.Services
 {
     public class TestEarningsApi : IDisposable
     {

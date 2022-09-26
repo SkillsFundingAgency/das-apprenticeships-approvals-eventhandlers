@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.NServiceBus.AzureFunction.Attributes;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
 {
@@ -16,19 +16,21 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
         }
 
         [FunctionName("HandleApprenticeshipCreated")]
-        public async Task HandleCommand([NServiceBusTrigger(Endpoint = QueueNames.ApprenticeshipCreated)] ApprenticeshipCreatedEvent command)
+        public async Task Handle([NServiceBusTrigger(Endpoint = QueueNames.ApprenticeshipCreated)] ApprenticeshipCreatedEvent @event)
         {
             await _apprenticeshipService.CreateApproval(
-                command.Uln,
-                command.ApprenticeshipId,
-                command.ProviderId,
-                command.AccountId,
-                command.LegalEntityName,
-                command.StartDate,
-                command.EndDate,
-                command.TransferSenderId,
-                command.ApprenticeshipEmployerTypeOnApproval,
-                command.PriceEpisodes);
+                @event.Uln,
+                @event.ApprenticeshipId,
+                @event.ProviderId,
+                @event.AccountId,
+                @event.LegalEntityName,
+                @event.StartDate,
+                @event.EndDate,
+                @event.TransferSenderId,
+                @event.ApprenticeshipEmployerTypeOnApproval,
+                @event.PriceEpisodes,
+                @event.TrainingCode,
+                @event.DateOfBirth);
         }
     }
 }

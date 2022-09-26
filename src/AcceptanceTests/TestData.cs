@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using AutoFixture;
 
-namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.AcceptanceTests
+namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests
 {
     public class TestData
     {
