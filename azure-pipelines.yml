@@ -105,7 +105,6 @@ stages:
   variables:
   - group: PROD Management Resources
   - group: PROD Shared Resources
-  - group: PROD das-apprenticeships-approvals-eventhandlers
   jobs:
   - template: pipeline-templates/job/deploy.yml
     parameters:
