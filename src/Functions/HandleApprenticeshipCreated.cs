@@ -24,13 +24,15 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 @event.ProviderId,
                 @event.AccountId,
                 @event.LegalEntityName,
-                @event.StartDate,
                 @event.EndDate,
                 @event.TransferSenderId,
                 @event.ApprenticeshipEmployerTypeOnApproval,
                 @event.PriceEpisodes,
                 @event.TrainingCode,
-                @event.DateOfBirth);
+                @event.DateOfBirth,
+                @event.StartDate,
+                @event.ActualStartDate,
+                @event.IsOnFlexiPaymentPilot);
         }
     }
 }

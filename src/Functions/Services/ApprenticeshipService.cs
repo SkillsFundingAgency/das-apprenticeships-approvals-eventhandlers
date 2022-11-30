@@ -16,7 +16,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
             _eventPublisher = eventPublisher;
         }
 
-        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime actualStartDate, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode, DateTime dateOfBirth)
+        public async Task CreateApproval(string uln, long apprenticeshipId, long ukprn, long employerAccountId, string legalEntityName, DateTime plannedEndDate, long? transferSenderId, ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode, DateTime dateOfBirth, DateTime? startDate, DateTime? actualStartDate, bool? isOnFlexiPaymentPilot)
         {
             if (apprenticeshipEmployerType == null)
             {
@@ -40,7 +40,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
 
             var approvalCreatedEvent = new ApprovalCreatedEvent
             {
-                ActualStartDate = actualStartDate,
                 LegalEntityName = legalEntityName,
                 AgreedPrice = priceEpisodes[0].Cost,
                 ApprovalsApprenticeshipId = apprenticeshipId,
@@ -51,7 +50,11 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 TrainingCode = trainingCode,
                 UKPRN = ukprn,
                 Uln = uln,
-                DateOfBirth = dateOfBirth
+                DateOfBirth = dateOfBirth,
+                StartDate = startDate,
+                ActualStartDate = actualStartDate,
+                IsOnFlexiPaymentPilot = isOnFlexiPaymentPilot
+
             };
 
             await _eventPublisher.Publish(approvalCreatedEvent);
