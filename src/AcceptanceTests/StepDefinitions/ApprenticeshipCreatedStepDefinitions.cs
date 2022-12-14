@@ -62,7 +62,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.StepDe
 
             var publishedEvent = ApprovalCreatedEventHandler.ReceivedEvents.Single();
 
-            publishedEvent.ActualStartDate.Should().Be(ApprenticeshipCreatedEvent.StartDate);
             publishedEvent.AgreedPrice.Should().Be(ApprenticeshipCreatedEvent.PriceEpisodes.First().Cost);
             publishedEvent.ApprovalsApprenticeshipId.Should().Be(ApprenticeshipCreatedEvent.ApprenticeshipId);
             publishedEvent.EmployerAccountId.Should().Be(ApprenticeshipCreatedEvent.AccountId);
@@ -74,6 +73,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.StepDe
             publishedEvent.UKPRN.Should().Be(ApprenticeshipCreatedEvent.ProviderId);
             publishedEvent.Uln.Should().Be(ApprenticeshipCreatedEvent.Uln);
             publishedEvent.DateOfBirth.Should().Be(ApprenticeshipCreatedEvent.DateOfBirth);
+            publishedEvent.ActualStartDate.Should().Be(ApprenticeshipCreatedEvent.ActualStartDate);
+            publishedEvent.StartDate.Should().Be(ApprenticeshipCreatedEvent.StartDate);
+            publishedEvent.IsOnFlexiPaymentPilot.Should().Be(ApprenticeshipCreatedEvent.IsOnFlexiPaymentPilot);
         }
 
         private bool EventMatchesExpectation(ApprovalCreatedEvent @event)
