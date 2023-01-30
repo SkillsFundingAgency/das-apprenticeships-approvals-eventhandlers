@@ -3,6 +3,8 @@
     public class ApprovalCreatedEvent
     {
         public string? Uln { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string? TrainingCode { get; set; }
         public long ApprovalsApprenticeshipId { get; set; }
         public long UKPRN { get; set; }
