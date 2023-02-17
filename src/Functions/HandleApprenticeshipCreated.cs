@@ -20,6 +20,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
         {
             await _apprenticeshipService.CreateApproval(
                 @event.Uln,
+                @event.FirstName,
+                @event.LastName,
                 @event.ApprenticeshipId,
                 @event.ProviderId,
                 @event.AccountId,
