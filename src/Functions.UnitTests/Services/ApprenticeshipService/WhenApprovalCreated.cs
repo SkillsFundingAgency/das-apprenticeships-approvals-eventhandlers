@@ -65,7 +65,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
                      y.DateOfBirth == dateOfBirth &&
                      y.ActualStartDate == actualStartDate &&
                      y.IsOnFlexiPaymentPilot == isOnFlexiPaymentsPilot &&
-                     y.ApprenticeshipHashedId == apprenticeshipHashedId
+                     y.ApprenticeshipHashedId == apprenticeshipHashedId &&
+                     y.TrainingPrice == priceEpisodes.Single().TrainingPrice &&
+                     y.EndPointAssessmentPrice == priceEpisodes.Single().EndPointAssessmentPrice
                 ), It.IsAny<PublishOptions>()));
         }
 

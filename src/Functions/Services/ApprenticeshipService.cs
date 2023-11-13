@@ -56,7 +56,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
                 StartDate = startDate,
                 ActualStartDate = actualStartDate,
                 IsOnFlexiPaymentPilot = isOnFlexiPaymentPilot,
-                ApprenticeshipHashedId =  apprenticeshipHashedId
+                ApprenticeshipHashedId =  apprenticeshipHashedId,
+                TrainingPrice = priceEpisodes[0].TrainingPrice,
+                EndPointAssessmentPrice = priceEpisodes[0].EndPointAssessmentPrice
             };
 
             await _eventPublisher.Publish(approvalCreatedEvent);
