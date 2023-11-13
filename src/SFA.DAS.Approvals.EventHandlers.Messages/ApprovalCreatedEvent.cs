@@ -18,5 +18,6 @@
         public FundingType FundingType { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool? IsOnFlexiPaymentPilot { get; set; }
+        public string ApprenticeshipHashedId { get; set; }
     }
 }

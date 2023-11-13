@@ -10,6 +10,6 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
         Task CreateApproval(string uln, string firstName, string lastName, long apprenticeshipId, long ukprn, long employerAccountId,
             string legalEntityName, DateTime plannedEndDate, long? transferSenderId,
             ApprenticeshipEmployerType? apprenticeshipEmployerType, PriceEpisode[] priceEpisodes, string trainingCode,
-            DateTime dateOfBirth, DateTime? startDate, DateTime? actualStartDate, bool? isOnFlexiPaymentPilot);
+            DateTime dateOfBirth, DateTime? startDate, DateTime? actualStartDate, bool? isOnFlexiPaymentPilot, string apprenticeshipHashedId);
     }
 }
