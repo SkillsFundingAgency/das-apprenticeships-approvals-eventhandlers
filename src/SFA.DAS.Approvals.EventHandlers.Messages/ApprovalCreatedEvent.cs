@@ -21,5 +21,6 @@
         public DateTime DateOfBirth { get; set; }
         public bool? IsOnFlexiPaymentPilot { get; set; }
         public string ApprenticeshipHashedId { get; set; }
+        public long AccountLegalEntityId { get; set; }
     }
 }
