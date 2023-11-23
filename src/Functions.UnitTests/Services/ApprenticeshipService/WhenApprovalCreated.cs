@@ -46,8 +46,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId);
+            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.StartDate == startDate && 
@@ -91,8 +92,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId);
+            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.Transfer
@@ -119,9 +121,10 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
             await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName,
-                endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId);
+                endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId);
 
             _eventPublisher.Verify(x => x.Publish(
                 It.Is<ApprovalCreatedEvent>(y => y.FundingType == FundingType.Levy), It.IsAny<PublishOptions>()));
@@ -147,8 +150,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName,  endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId);
+            await _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName,  endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId);
 
             _eventPublisher.Verify(x => x.Publish(It.Is<ApprovalCreatedEvent>(
                 y => y.FundingType == FundingType.NonLevy
@@ -175,8 +179,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId));
         }
 
         [Test]
@@ -199,8 +204,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId));
         }
 
         [Test]
@@ -223,8 +229,9 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Se
             var actualStartDate = _fixture.Create<DateTime?>();
             var isOnFlexiPaymentsPilot = _fixture.Create<bool?>();
             var apprenticeshipHashedId = _fixture.Create<string>();
+            var accountLegalEntityId = _fixture.Create<long>();
 
-            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId));
+            Assert.ThrowsAsync<ArgumentException>(() => _apprenticeshipService.CreateApproval(uln, firstName, lastName, apprenticeshipId, providerId, accountId, legalEntityName, endDate, transferSenderId, employerType, priceEpisodes, trainingCode, dateOfBirth, startDate, actualStartDate, isOnFlexiPaymentsPilot, apprenticeshipHashedId, accountLegalEntityId));
         }
     }
 }
