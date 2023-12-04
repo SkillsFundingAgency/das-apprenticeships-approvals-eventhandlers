@@ -13,10 +13,13 @@
         public DateTime? StartDate { get; set; }
         public DateTime? ActualStartDate { get; set; }
         public DateTime? PlannedEndDate { get; set; }
+        public decimal? TrainingPrice { get; set; }
+        public decimal? EndPointAssessmentPrice { get; set; }
         public decimal AgreedPrice { get; set; }
         public long? FundingEmployerAccountId { get; set; }
         public FundingType FundingType { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool? IsOnFlexiPaymentPilot { get; set; }
+        public string ApprenticeshipHashedId { get; set; }
     }
 }
