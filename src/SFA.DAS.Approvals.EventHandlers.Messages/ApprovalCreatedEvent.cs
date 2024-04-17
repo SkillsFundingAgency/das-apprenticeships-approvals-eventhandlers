@@ -22,5 +22,6 @@
         public bool? IsOnFlexiPaymentPilot { get; set; }
         public string ApprenticeshipHashedId { get; set; }
         public long AccountLegalEntityId { get; set; }
+        public string TrainingCourseVersion { get; set; }
     }
 }
