@@ -25,6 +25,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services
             DateTime? actualStartDate, 
             bool? isOnFlexiPaymentPilot, 
             string apprenticeshipHashedId,
-            long AccountLegalEntityId);
+            long AccountLegalEntityId,
+            string trainingCourseVersion);
     }
 }

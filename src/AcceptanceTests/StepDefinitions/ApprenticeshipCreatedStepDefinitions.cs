@@ -76,6 +76,7 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.AcceptanceTests.StepDe
             publishedEvent.ActualStartDate.Should().Be(ApprenticeshipCreatedEvent.ActualStartDate);
             publishedEvent.StartDate.Should().Be(ApprenticeshipCreatedEvent.StartDate);
             publishedEvent.IsOnFlexiPaymentPilot.Should().Be(ApprenticeshipCreatedEvent.IsOnFlexiPaymentPilot);
+            publishedEvent.TrainingCourseVersion.Should().Be(ApprenticeshipCreatedEvent.TrainingCourseVersion);
         }
 
         private bool EventMatchesExpectation(ApprovalCreatedEvent @event)
