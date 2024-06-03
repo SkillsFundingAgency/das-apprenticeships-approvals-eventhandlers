@@ -36,7 +36,8 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions
                 @event.ActualStartDate,
                 @event.IsOnFlexiPaymentPilot,
                 @event.ApprenticeshipHashedId,
-                @event.AccountLegalEntityId);
+                @event.AccountLegalEntityId,
+                @event.TrainingCourseVersion);
         }
     }
 }
