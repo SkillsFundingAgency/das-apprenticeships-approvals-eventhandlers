@@ -2,6 +2,6 @@
 {
     public static class QueueNames
     {
-        public const string ApprenticeshipCreated = "SFA.DAS.Apprenticeships.Approvals.EH.Created";
+        public const string ApprenticeshipCreated = "das-apps-approvals-eh-apprenticeshipcreated";
     }
 }
