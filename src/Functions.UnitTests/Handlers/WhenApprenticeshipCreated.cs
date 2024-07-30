@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using Moq;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 
@@ -27,9 +28,28 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
         {
             var @event = _fixture.Create<ApprenticeshipCreatedEvent>();
 
-            await _handler.Handle(@event);
+            await _handler.Handle(@event, new Mock<ILogger>().Object);
 
-            _apprenticeshipService.Verify(x => x.CreateApproval(@event.Uln, @event.FirstName, @event.LastName, @event.ApprenticeshipId, @event.ProviderId, @event.AccountId, @event.LegalEntityName, @event.EndDate, @event.TransferSenderId, @event.ApprenticeshipEmployerTypeOnApproval, @event.PriceEpisodes, @event.TrainingCode, @event.DateOfBirth, @event.StartDate, @event.ActualStartDate, @event.IsOnFlexiPaymentPilot, @event.ApprenticeshipHashedId, @event.AccountLegalEntityId, @event.TrainingCourseVersion));
+            _apprenticeshipService.Verify(x => x.CreateApproval(
+                @event.Uln, 
+                @event.FirstName, 
+                @event.LastName, 
+                @event.ApprenticeshipId, 
+                @event.ProviderId, 
+                @event.AccountId, 
+                @event.LegalEntityName, 
+                @event.EndDate, 
+                @event.TransferSenderId, 
+                @event.ApprenticeshipEmployerTypeOnApproval, 
+                @event.PriceEpisodes, 
+                @event.TrainingCode, 
+                @event.DateOfBirth, 
+                @event.StartDate, 
+                @event.ActualStartDate, 
+                @event.IsOnFlexiPaymentPilot, 
+                @event.ApprenticeshipHashedId, 
+                @event.AccountLegalEntityId, 
+                @event.TrainingCourseVersion));
         }
     }
 }
