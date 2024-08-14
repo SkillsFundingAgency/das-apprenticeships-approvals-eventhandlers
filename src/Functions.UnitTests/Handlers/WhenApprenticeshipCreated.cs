@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using Moq;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.Services;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 
@@ -23,13 +24,63 @@ namespace SFA.DAS.Apprenticeships.Approvals.EventHandlers.Functions.UnitTests.Ha
         }
 
         [Test]
-        public async Task ThenApprovalIsCreated()
+        public async Task ForDASFundedApprenticeshipThenApprovalIsCreated()
         {
-            var @event = _fixture.Create<ApprenticeshipCreatedEvent>();
+            var @event = _fixture.Build<ApprenticeshipCreatedEvent>().With(x => x.IsOnFlexiPaymentPilot, true).Create();
 
-            await _handler.Handle(@event);
+            await _handler.Handle(@event, new Mock<ILogger>().Object);
 
-            _apprenticeshipService.Verify(x => x.CreateApproval(@event.Uln, @event.FirstName, @event.LastName, @event.ApprenticeshipId, @event.ProviderId, @event.AccountId, @event.LegalEntityName, @event.EndDate, @event.TransferSenderId, @event.ApprenticeshipEmployerTypeOnApproval, @event.PriceEpisodes, @event.TrainingCode, @event.DateOfBirth, @event.StartDate, @event.ActualStartDate, @event.IsOnFlexiPaymentPilot, @event.ApprenticeshipHashedId, @event.AccountLegalEntityId, @event.TrainingCourseVersion));
+            _apprenticeshipService.Verify(x => x.CreateApproval(
+                @event.Uln, 
+                @event.FirstName, 
+                @event.LastName, 
+                @event.ApprenticeshipId, 
+                @event.ProviderId, 
+                @event.AccountId, 
+                @event.LegalEntityName, 
+                @event.EndDate, 
+                @event.TransferSenderId, 
+                @event.ApprenticeshipEmployerTypeOnApproval, 
+                @event.PriceEpisodes, 
+                @event.TrainingCode, 
+                @event.DateOfBirth, 
+                @event.StartDate, 
+                @event.ActualStartDate, 
+                @event.IsOnFlexiPaymentPilot, 
+                @event.ApprenticeshipHashedId, 
+                @event.AccountLegalEntityId, 
+                @event.TrainingCourseVersion));
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        public async Task ForSLDFundedApprenticeshipThenApprovalNotCreated(bool? isOnFlexiPaymentPilot)
+        {
+            var @event = _fixture.Build<ApprenticeshipCreatedEvent>().With(x => x.IsOnFlexiPaymentPilot, isOnFlexiPaymentPilot)
+                .Create();
+
+            await _handler.Handle(@event, new Mock<ILogger>().Object);
+
+            _apprenticeshipService.Verify(x => x.CreateApproval(
+                @event.Uln,
+                @event.FirstName,
+                @event.LastName,
+                @event.ApprenticeshipId,
+                @event.ProviderId,
+                @event.AccountId,
+                @event.LegalEntityName,
+                @event.EndDate,
+                @event.TransferSenderId,
+                @event.ApprenticeshipEmployerTypeOnApproval,
+                @event.PriceEpisodes,
+                @event.TrainingCode,
+                @event.DateOfBirth,
+                @event.StartDate,
+                @event.ActualStartDate,
+                @event.IsOnFlexiPaymentPilot,
+                @event.ApprenticeshipHashedId,
+                @event.AccountLegalEntityId,
+                @event.TrainingCourseVersion), Times.Never);
         }
     }
 }
